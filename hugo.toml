@@ -2,6 +2,9 @@ baseURL = "/"
 languageCode = "en-us"
 title = "Cache Valley AI Community"
 
+[params]
+description = "A small AI community in Logan, Utah. We meet up for lunch every so often and hang out on Discord in between."
+
 [markup]
 [markup.goldmark.renderer]
 unsafe = true
@@ -10,3 +13,15 @@ unsafe = true
 disableHTML = false
 disableCSS = false
 disableJS = false
+
+[permalinks]
+meetups = "/meetups/:slug/"
+
+[outputs]
+home = ["html", "rss"]
+section = ["html", "rss"]
+
+[sitemap]
+changeFreq = "weekly"
+filename = "sitemap.xml"
+priority = 0.5

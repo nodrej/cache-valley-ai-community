@@ -3,35 +3,30 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Cache Valley AI Community</title>
-  <meta name="description" content="A small AI community in Logan, Utah. We meet up for lunch every so often and hang out on Discord in between.">
+  <title>{{ .Site.Title }}</title>
+  <meta name="description" content="{{ .Site.Params.description | default "A small AI community in Logan, Utah. We meet up for lunch every so often and hang out on Discord in between." }}">
+  <link rel="canonical" href="{{ .Permalink }}">
+
+  <meta property="og:title" content="{{ .Site.Title }}">
+  <meta property="og:description" content="{{ .Site.Params.description | default "A small AI community in Logan, Utah." }}">
+  <meta property="og:url" content="{{ .Permalink }}">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="{{ .Site.Title }}">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="/styles.css">
+
+  {{ with .OutputFormats.Get "rss" }}
+  <link rel="alternate" type="application/rss+xml" href="{{ .Permalink }}" title="{{ $.Site.Title }}">
+  {{ end }}
 </head>
 <body>
 
   <!-- DARK BLOCK: nav + hero -->
   <div class="block block-dark">
-    <header class="nav">
-      <div class="shell nav-inner">
-        <a class="brand" href="#top" aria-label="Cache Valley AI home">
-          <span class="brand-mark">CV</span>
-          <span class="brand-word">Cache Valley AI Community</span>
-        </a>
-        <nav class="nav-links" aria-label="Primary">
-          <a href="#community">Community</a>
-          <a href="#topics">Topics</a>
-          <a href="#events">Events</a>
-          <a href="#faq">FAQ</a>
-        </nav>
-        <div class="nav-cta">
-          <a class="link-quiet" href="https://www.cachevalley.co/organizations/cachevalleyaicommunity/" target="_blank" rel="noreferrer">Organization</a>
-          <a class="btn btn-accent" href="https://discord.gg/uFA8GJmq" target="_blank" rel="noreferrer">Join Discord</a>
-        </div>
-      </div>
-    </header>
+    {{ partial "nav.html" . }}
 
     <section class="hero shell" id="top">
       <p class="kicker">
@@ -49,33 +44,54 @@
         <a class="btn btn-outline" href="https://form.typeform.com/to/uaTdLFQ7" target="_blank" rel="noreferrer">Get event emails</a>
       </div>
 
+      {{/* Pull the next upcoming meetup if any, otherwise the most recent past one */}}
+      {{ $now := now }}
+      {{ $meetups := where .Site.RegularPages "Section" "meetups" }}
+      {{ $upcoming := where $meetups "Date" "gt" $now }}
+      {{ $past := where $meetups "Date" "lt" $now }}
+      {{ $featured := false }}
+      {{ $isUpcoming := false }}
+      {{ if gt (len $upcoming) 0 }}
+        {{ $featured = index ($upcoming.ByDate) 0 }}
+        {{ $isUpcoming = true }}
+      {{ else if gt (len $past) 0 }}
+        {{ $featured = index ($past.ByDate.Reverse) 0 }}
+      {{ end }}
+
+      {{ with $featured }}
       <aside class="hero-card">
         <div class="card-head">
-          <p class="kicker">First meetup</p>
+          <p class="kicker">{{ if $isUpcoming }}Next meetup{{ else }}Latest meetup{{ end }}</p>
           <span class="badge">
             <span class="badge-dot"></span>
-            Done · more soon
+            {{ if $isUpcoming }}{{ .Params.status | default "Confirmed" }}{{ else }}Done · more soon{{ end }}
           </span>
         </div>
         <div class="card-grid">
           <div class="card-cell">
             <span class="cell-label">When</span>
-            <span class="cell-value">Fri · Apr 24 · 2026</span>
+            <span class="cell-value">{{ .Date.Format "Mon · Jan 2 · 2006" }}</span>
           </div>
           <div class="card-cell">
             <span class="cell-label">Time</span>
-            <span class="cell-value">12:00 PM</span>
+            <span class="cell-value">{{ .Params.time | default "TBD" }}</span>
           </div>
           <div class="card-cell">
             <span class="cell-label">Where</span>
-            <span class="cell-value">Beehive Grill · Logan</span>
+            <span class="cell-value">{{ .Params.location | default "TBD" }}</span>
           </div>
           <div class="card-cell">
-            <span class="cell-label">Next one</span>
-            <span class="cell-value">TBD · join Discord</span>
+            <span class="cell-label">{{ if $isUpcoming }}Cost{{ else }}Next one{{ end }}</span>
+            <span class="cell-value">{{ if $isUpcoming }}{{ .Params.cost | default "Free" }}{{ else }}TBD · join Discord{{ end }}</span>
           </div>
         </div>
+        <p class="hero-card-foot">
+          <a class="inline-link" href="{{ .Permalink }}">{{ if $isUpcoming }}Read the details{{ else }}Read the recap{{ end }}</a>
+          <span class="hero-card-sep">·</span>
+          <a class="inline-link quiet" href="/meetups/">All meetups</a>
+        </p>
       </aside>
+      {{ end }}
     </section>
   </div>
 
@@ -165,7 +181,7 @@
       </div>
     </section>
 
-    <!-- EVENTS -->
+    <!-- EVENTS (the threads / format section) -->
     <section class="events shell" id="events">
       <div class="events-head">
         <p class="kicker">Events</p>
@@ -194,6 +210,32 @@
       </div>
       <article class="event-display" id="eventDisplay"></article>
     </section>
+
+    {{/* Recent meetups strip */}}
+    {{ $recent := first 3 (where .Site.RegularPages "Section" "meetups").ByDate.Reverse }}
+    {{ if gt (len $recent) 0 }}
+    <section class="recent-meetups shell">
+      <div class="recent-head">
+        <p class="kicker">Recent</p>
+        <h2>From the meetups log.</h2>
+        <a class="inline-link" href="/meetups/">See all meetups →</a>
+      </div>
+      <ul class="recent-grid">
+        {{ range $recent }}
+        <li>
+          <a class="meetup-row" href="{{ .Permalink }}">
+            <div class="meetup-row-meta">
+              <span class="meetup-row-date">{{ .Date.Format "Jan 2, 2006" }}</span>
+              {{ with .Params.location }}<span class="meetup-row-loc">{{ . }}</span>{{ end }}
+            </div>
+            <h3 class="meetup-row-title">{{ .Title }}</h3>
+            {{ with .Summary }}<p class="meetup-row-summary muted">{{ . | plainify | truncate 160 }}</p>{{ end }}
+          </a>
+        </li>
+        {{ end }}
+      </ul>
+    </section>
+    {{ end }}
 
     <!-- FAQ -->
     <section class="faq shell" id="faq">
@@ -244,40 +286,9 @@
 
   <!-- DARK BLOCK: CTA + footer -->
   <div class="block block-dark">
-    <section class="join shell">
-      <p class="kicker">
-        <span class="status-dot"></span>
-        Join
-      </p>
-      <h2 class="display">Start online. Then show up in person.</h2>
-      <p class="lede center">
-        Easiest way in is Discord. Or, if you'd rather get quieter nudges about meetups, the
-        email list works too.
-      </p>
-      <div class="join-cta">
-        <a class="btn btn-accent big" href="https://discord.gg/uFA8GJmq" target="_blank" rel="noreferrer">Open Discord invite</a>
-        <a class="btn btn-outline big" href="https://form.typeform.com/to/uaTdLFQ7" target="_blank" rel="noreferrer">Join the email list</a>
-      </div>
-      <p class="join-foot">No spam. Meetup reminders only.</p>
-    </section>
-
-    <footer class="foot">
-      <div class="shell foot-inner">
-        <div class="foot-left">
-          <span class="brand-mark">CV</span>
-          <div>
-            <p class="foot-title">Cache Valley AI Community</p>
-            <p class="foot-sub">Inspired by the other local tech meetups on <a href="https://www.cachevalley.co/" target="_blank" rel="noreferrer">cachevalley.co</a>.</p>
-          </div>
-        </div>
-        <div class="foot-right">
-          <a href="https://discord.gg/uFA8GJmq" target="_blank" rel="noreferrer">Discord</a>
-          <a href="https://form.typeform.com/to/uaTdLFQ7" target="_blank" rel="noreferrer">Email list</a>
-        </div>
-      </div>
-    </footer>
+    {{ partial "foot-cta.html" . }}
   </div>
 
-  <script src="script.js"></script>
+  <script src="/script.js"></script>
 </body>
 </html>

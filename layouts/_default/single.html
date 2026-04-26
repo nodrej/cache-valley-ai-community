@@ -1,0 +1,46 @@
+{{ define "main" }}
+<article class="post shell">
+  <header class="post-head">
+    <p class="kicker">Meetup</p>
+    <h1 class="post-title">{{ .Title }}</h1>
+    <ul class="post-meta">
+      <li>
+        <span class="meta-label">When</span>
+        <span class="meta-value">{{ .Date.Format "Mon · Jan 2 · 2006" }}</span>
+      </li>
+      {{ with .Params.time }}
+      <li>
+        <span class="meta-label">Time</span>
+        <span class="meta-value">{{ . }}</span>
+      </li>
+      {{ end }}
+      {{ with .Params.location }}
+      <li>
+        <span class="meta-label">Where</span>
+        <span class="meta-value">{{ . }}</span>
+      </li>
+      {{ end }}
+      {{ with .Params.cost }}
+      <li>
+        <span class="meta-label">Cost</span>
+        <span class="meta-value">{{ . }}</span>
+      </li>
+      {{ end }}
+      {{ with .Params.status }}
+      <li>
+        <span class="meta-label">Status</span>
+        <span class="meta-value">{{ . }}</span>
+      </li>
+      {{ end }}
+    </ul>
+  </header>
+
+  <div class="post-body">
+    {{ .Content }}
+  </div>
+
+  <p class="post-back">
+    <a href="/meetups/" class="inline-link">Back to all meetups</a>
+  </p>
+</article>
+{{ end }}

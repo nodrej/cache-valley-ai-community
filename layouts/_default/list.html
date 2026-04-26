@@ -1,0 +1,30 @@
+{{ define "main" }}
+<section class="meetup-list shell">
+  <header class="post-head">
+    <p class="kicker">Meetups</p>
+    <h1 class="post-title">{{ .Title }}</h1>
+    {{ with .Description }}
+    <p class="post-lede muted">{{ . }}</p>
+    {{ end }}
+    {{ with .Content }}<div class="post-body">{{ . }}</div>{{ end }}
+  </header>
+
+  <ul class="meetup-grid">
+    {{ range .Pages.ByDate.Reverse }}
+    <li>
+      <a class="meetup-row" href="{{ .Permalink }}">
+        <div class="meetup-row-meta">
+          <span class="meetup-row-date">{{ .Date.Format "Jan 2, 2006" }}</span>
+          {{ with .Params.location }}<span class="meetup-row-loc">{{ . }}</span>{{ end }}
+          {{ with .Params.status }}<span class="meetup-row-status">{{ . }}</span>{{ end }}
+        </div>
+        <h3 class="meetup-row-title">{{ .Title }}</h3>
+        {{ with .Summary }}<p class="meetup-row-summary muted">{{ . | plainify | truncate 200 }}</p>{{ end }}
+      </a>
+    </li>
+    {{ else }}
+    <li class="meetup-empty">No meetups posted yet. Check back soon, or hop into the Discord.</li>
+    {{ end }}
+  </ul>
+</section>
+{{ end }}
