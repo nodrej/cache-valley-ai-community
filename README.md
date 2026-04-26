@@ -2,7 +2,7 @@
 
 A small, sleek site for the Cache Valley AI Community. A Logan, Utah meetup for people building with, learning about, or just plain curious about AI.
 
-**Live preview:** https://trusty-forge-w2yx.here.now/
+To preview locally, see [Run locally](#run-locally) below.
 
 ## Stack
 
