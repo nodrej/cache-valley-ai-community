@@ -1,11 +1,10 @@
 {{ define "main" }}
 <article class="post shell">
   <header class="post-head">
-    <p class="kicker">{{ .Section | humanize }}</p>
+    <p class="kicker">Meetup</p>
     <h1 class="post-title">{{ .Title }}</h1>
     {{ with .Description }}<p class="post-lede muted">{{ . }}</p>{{ end }}
 
-    {{ if or (.Params.time) (.Params.location) (.Params.cost) (.Params.status) }}
     <ul class="post-meta">
       <li>
         <span class="meta-label">When</span>
@@ -16,7 +15,6 @@
       {{ with .Params.cost }}<li><span class="meta-label">Cost</span><span class="meta-value">{{ . }}</span></li>{{ end }}
       {{ with .Params.status }}<li><span class="meta-label">Status</span><span class="meta-value">{{ . }}</span></li>{{ end }}
     </ul>
-    {{ end }}
   </header>
 
   <div class="post-body">
@@ -29,8 +27,26 @@
   </ul>
   {{ end }}
 
+  <nav class="post-nav" aria-label="Post navigation">
+    {{ if .PrevInSection }}
+    <a class="post-nav-link prev" href="{{ .PrevInSection.Permalink }}">
+      <span class="post-nav-label">Previous</span>
+      <span class="post-nav-title">{{ .PrevInSection.Title }}</span>
+    </a>
+    {{ else }}
+    <span></span>
+    {{ end }}
+
+    {{ if .NextInSection }}
+    <a class="post-nav-link next" href="{{ .NextInSection.Permalink }}">
+      <span class="post-nav-label">Next</span>
+      <span class="post-nav-title">{{ .NextInSection.Title }}</span>
+    </a>
+    {{ end }}
+  </nav>
+
   <p class="post-back">
-    <a href="/{{ .Section }}/" class="inline-link">Back to all {{ .Section }}</a>
+    <a href="/posts/" class="inline-link">Back to all meetups</a>
   </p>
 </article>
 {{ end }}

@@ -1,0 +1,23 @@
+<meta property="og:title" content="{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }}{{ end }}" />
+<meta property="og:description" content="{{ with .Description }}{{ . }}{{ else }}{{ if .IsPage }}{{ with .Summary }}{{ . | plainify }}{{ else }}{{ with .Site.Params.description }}{{ . }}{{ end }}{{ end }}{{ else }}{{ with .Site.Params.description }}{{ . }}{{ end }}{{ end }}{{ end }}" />
+<meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}" />
+<meta property="og:url" content="{{ .Permalink }}" />
+<meta property="og:site_name" content="{{ .Site.Title }}" />
+
+{{- with .Params.image }}
+{{ $image := $.Resources.GetMatch . }}
+{{ with $image }}
+{{ $thumb := .Resize "1200x" }}
+<meta property="og:image" content="{{ $thumb.Permalink }}" />
+{{ end }}
+{{ end }}
+
+{{- $iso8601 := "2006-01-02T15:04:05-07:00" -}}
+{{- if .IsPage }}
+{{- if not .PublishDate.IsZero }}<meta property="article:published_time" {{ .PublishDate.Format $iso8601 | printf "content=%q" | safeHTMLAttr }} />
+{{ else if not .Date.IsZero }}<meta property="article:published_time" {{ .Date.Format $iso8601 | printf "content=%q" | safeHTMLAttr }} />
+{{ end }}
+<meta property="article:section" content="{{ .Section }}" />
+{{- with .Params.tags }}{{ range first 6 . }}
+<meta property="article:tag" content="{{ . }}" />{{ end }}{{ end }}
+{{- end }}

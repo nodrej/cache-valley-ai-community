@@ -1,0 +1,4 @@
+{{/* Favicon partial. Drop a favicon at static/favicon.ico (or .svg/.png) and add the matching <link> tags here. */}}
+{{ if fileExists "static/favicon.ico" }}<link rel="icon" type="image/x-icon" href="/favicon.ico" />{{ end }}
+{{ if fileExists "static/favicon.svg" }}<link rel="icon" type="image/svg+xml" href="/favicon.svg" />{{ end }}
+{{ if fileExists "static/apple-touch-icon.png" }}<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />{{ end }}

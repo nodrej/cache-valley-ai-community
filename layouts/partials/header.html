@@ -1,15 +1,16 @@
 <header class="nav">
   <div class="shell nav-inner">
-    <a class="brand" href="/" aria-label="Cache Valley AI Community home">
+    <a class="brand" href="/" aria-label="{{ .Site.Title }} home">
       <span class="brand-mark">CV</span>
-      <span class="brand-word">Cache Valley AI Community</span>
+      <span class="brand-word">{{ .Site.Title }}</span>
     </a>
+
     <nav class="nav-links" aria-label="Primary">
-      <a href="/#community">Community</a>
-      <a href="/#topics">Topics</a>
-      <a href="/meetups/">Meetups</a>
-      <a href="/#faq">FAQ</a>
+      {{ range .Site.Params.navlinks }}
+      <a href="{{ .url }}">{{ .name }}</a>
+      {{ end }}
     </nav>
+
     <div class="nav-cta">
       <a class="link-quiet" href="https://www.cachevalley.co/organizations/cachevalleyaicommunity/" target="_blank" rel="noreferrer">Organization</a>
       <a class="btn btn-accent" href="https://discord.gg/uFA8GJmq" target="_blank" rel="noreferrer">Join Discord</a>

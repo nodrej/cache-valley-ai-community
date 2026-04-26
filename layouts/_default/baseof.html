@@ -1,18 +1,19 @@
 <!doctype html>
-<html lang="en">
+<html lang="{{ .Site.LanguageCode }}">
 <head>
   <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="all,follow" />
+  <meta name="googlebot" content="index,follow,snippet,archive" />
+
   <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} · {{ .Site.Title }}{{ end }}</title>
-  <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description | default "A small AI community in Logan, Utah. We meet up for lunch every so often and hang out on Discord in between." }}{{ end }}">
+  <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description | default "A small AI community in Logan, Utah." }}{{ end }}">
   <link rel="canonical" href="{{ .Permalink }}">
 
-  <!-- Open Graph -->
-  <meta property="og:title" content="{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }}{{ end }}">
-  <meta property="og:description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description | default "A small AI community in Logan, Utah." }}{{ end }}">
-  <meta property="og:url" content="{{ .Permalink }}">
-  <meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">
-  <meta property="og:site_name" content="{{ .Site.Title }}">
+  {{ partial "opengraph.html" . }}
+  {{ partial "twitter_cards.html" . }}
+  {{ partial "favicon.html" . }}
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -27,18 +28,19 @@
 </head>
 <body>
   <div class="block block-dark">
-    {{ partial "nav.html" . }}
-    {{ block "header" . }}{{ end }}
+    {{ partial "header.html" . }}
+    {{ block "hero" . }}{{ end }}
   </div>
 
-  <div class="block block-light">
+  <main id="main-content" class="block block-light">
     {{ block "main" . }}{{ end }}
-  </div>
+  </main>
 
   <div class="block block-dark">
-    {{ partial "foot-cta.html" . }}
+    {{ partial "footer.html" . }}
   </div>
 
+  <script src="/script.js"></script>
   {{ block "scripts" . }}{{ end }}
 </body>
 </html>

@@ -4,6 +4,10 @@ title = "Cache Valley AI Community"
 
 [params]
 description = "A small AI community in Logan, Utah. We meet up for lunch every so often and hang out on Discord in between."
+github = "https://github.com/nodrej/cache-valley-ai-community"
+
+[params.Social]
+twitter = ""
 
 [markup]
 [markup.goldmark.renderer]
@@ -15,7 +19,7 @@ disableCSS = false
 disableJS = false
 
 [permalinks]
-meetups = "/meetups/:slug/"
+posts = "/posts/:slug/"
 
 [outputs]
 home = ["html", "rss"]
@@ -25,3 +29,19 @@ section = ["html", "rss"]
 changeFreq = "weekly"
 filename = "sitemap.xml"
 priority = 0.5
+
+[[params.navlinks]]
+name = "community/"
+url = "/#community"
+
+[[params.navlinks]]
+name = "topics/"
+url = "/#topics"
+
+[[params.navlinks]]
+name = "posts/"
+url = "/posts/"
+
+[[params.navlinks]]
+name = "faq/"
+url = "/#faq"
