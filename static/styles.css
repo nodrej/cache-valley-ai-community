@@ -1,5 +1,5 @@
 :root {
-  /* Dark block — warm near-black */
+  /* Dark block. Warm near-black */
   --d-bg: #0e0d0c;
   --d-surface: #181613;
   --d-ink: #f3eee2;
@@ -8,7 +8,7 @@
   --d-line: rgba(243, 238, 226, 0.10);
   --d-line-strong: rgba(243, 238, 226, 0.18);
 
-  /* Light block — warm cream */
+  /* Light block. Warm cream */
   --l-bg: #f5f3ed;
   --l-surface: #fdfbf5;
   --l-ink: #14130f;
@@ -19,7 +19,7 @@
   --l-line-strong: #cfc9b8;
 
   /* Shared */
-  --accent: #5fb3a5;        /* refined teal — ties to logo's circuit pattern */
+  --accent: #5fb3a5;        /* refined teal, ties to logo's circuit pattern */
   --accent-deep: #3f8c80;
   --accent-ink: #07211e;
 

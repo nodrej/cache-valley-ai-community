@@ -1,37 +1,36 @@
 const eventDisplay = document.getElementById("eventDisplay");
 const eventTabs = [...document.querySelectorAll(".event-tab")];
 
-const listingUrl =
-  "https://www.cachevalley.co/posts/cache-valley-ai-meetup-large-lunch-meeting-april-2026/";
+const discordUrl = "https://discord.gg/uFA8GJmq";
 
 const eventThemes = {
   conversation: {
-    label: "Thread 01 — Open conversation",
+    label: "Thread 01 · Open conversation",
     title: "Lunch-table energy, signal over noise.",
-    body: "People trading what they're learning, what broke this week, and what finally clicked. No keynotes, no panels, just useful conversation.",
+    body: "People talking about what they're learning, what broke this week, what finally clicked. No keynotes, no panels, just useful conversation.",
     bullets: [
-      "Bring a question or a recent weird result",
-      "Listening counts — show up, stay curious",
-      "Connect with two or three people before you leave"
+      "Bring a question, or a weird thing you saw this week",
+      "Listening counts. Just show up and stay curious.",
+      "Try to actually meet a couple of people before you leave"
     ]
   },
   builders: {
-    label: "Thread 02 — Builders welcome",
+    label: "Thread 02 · Builders welcome",
     title: "For people elbow-deep in the work.",
-    body: "Shipping something, prototyping, or just now wiring an API for the first time — this thread is for the people in motion.",
+    body: "Shipping something, prototyping, or just wiring up an API for the first time. This one's for the people in motion.",
     bullets: [
-      "Prototypes, side projects, and messy demos",
+      "Prototypes, side projects, messy half-working demos",
       "Tool stacks, agent loops, eval war stories",
-      "Swap tips with people actually building"
+      "Trade tips with people actually shipping"
     ]
   },
   future: {
-    label: "Thread 03 — Where AI is headed",
+    label: "Thread 03 · Where AI is headed",
     title: "Forward-looking, but grounded.",
-    body: "What's coming, what's overhyped, and what a small mountain valley should pay attention to next.",
+    body: "What's coming, what's overhyped, and what a small mountain valley should actually pay attention to next.",
     bullets: [
-      "Local impact — work, school, community",
-      "Honest takes on frontier model releases",
+      "Local impact: work, school, community",
+      "Honest takes on the latest model releases",
       "What's worth learning next, and why"
     ]
   }
@@ -48,7 +47,7 @@ function renderEvent(themeKey) {
     <ul class="event-bullets">
       ${theme.bullets.map((b) => `<li><span class="bullet-glyph">→</span>${b}</li>`).join("")}
     </ul>
-    <a class="inline-link" href="${listingUrl}" target="_blank" rel="noreferrer">Read the meetup listing</a>
+    <a class="inline-link" href="${discordUrl}" target="_blank" rel="noreferrer">Hop into the Discord</a>
   `;
 
   eventTabs.forEach((tab) => {
