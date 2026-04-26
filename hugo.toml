@@ -1,0 +1,12 @@
+baseURL = "/"
+languageCode = "en-us"
+title = "Cache Valley AI Community"
+
+[markup]
+[markup.goldmark.renderer]
+unsafe = true
+
+[minify]
+disableHTML = false
+disableCSS = false
+disableJS = false
