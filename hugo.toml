@@ -20,6 +20,7 @@ disableJS = false
 
 [permalinks]
 posts = "/posts/:slug/"
+page = "/:slug/"
 
 [outputs]
 home = ["html", "rss"]
@@ -29,6 +30,10 @@ section = ["html", "rss"]
 changeFreq = "weekly"
 filename = "sitemap.xml"
 priority = 0.5
+
+[[params.navlinks]]
+name = "about/"
+url = "/about/"
 
 [[params.navlinks]]
 name = "community/"

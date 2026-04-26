@@ -1,7 +1,12 @@
 {{ define "main" }}
 <article class="post shell">
   <header class="post-head">
-    <p class="kicker">{{ .Section | humanize }}</p>
+    {{ with .Params.kicker }}
+      <p class="kicker">{{ . }}</p>
+    {{ else }}
+      {{ if eq .Section "posts" }}<p class="kicker">Meetup</p>{{ end }}
+    {{ end }}
+
     <h1 class="post-title">{{ .Title }}</h1>
     {{ with .Description }}<p class="post-lede muted">{{ . }}</p>{{ end }}
 
@@ -29,8 +34,10 @@
   </ul>
   {{ end }}
 
+  {{ if eq .Section "posts" }}
   <p class="post-back">
-    <a href="/{{ .Section }}/" class="inline-link">Back to all {{ .Section }}</a>
+    <a href="/posts/" class="inline-link">Back to all meetups</a>
   </p>
+  {{ end }}
 </article>
 {{ end }}
