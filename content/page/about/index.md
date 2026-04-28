@@ -8,8 +8,6 @@ summary: "A short manifesto. What we're trying to do, who it's for, and how we'd
 draft: false
 ---
 
-What we're trying to do, and a few rules of the road. We'll keep this honest and short.
-
 ## What we're trying to do
 
 A few big things, mostly.

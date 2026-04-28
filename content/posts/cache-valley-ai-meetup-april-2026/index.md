@@ -8,6 +8,7 @@ location: "Beehive Grill · Logan"
 time: "12:00 PM"
 cost: "Free, you cover your own lunch"
 status: "Done"
+image: "poster.png"
 draft: false
 weight: 10
 categories:

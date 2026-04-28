@@ -1,6 +1,7 @@
 baseURL = "/"
 languageCode = "en-us"
 title = "Cache Valley AI Community"
+buildFuture = true
 
 [params]
 description = "A small AI community in Logan, Utah. We meet up for lunch every so often and hang out on Discord in between."
